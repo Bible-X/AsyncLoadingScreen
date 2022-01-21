@@ -16,6 +16,9 @@
 void SHorizontalLoadingWidget::Construct(const FArguments& InArgs, const FLoadingWidgetSettings& Settings)
 {
 	bPlayReverse = Settings.ImageSequenceSettings.bPlayReverse;	
+	
+	const FSoftObjectPath& ImageAsset = Settings.ImageBeforeLoadingText; // Patrick
+	UObject* ImageObject = ImageAsset.TryLoad(); // Patrick
 
 	// Root is a Horizontal Box of course
 	TSharedRef<SHorizontalBox> Root = SNew(SHorizontalBox);		
@@ -76,20 +79,44 @@ void SHorizontalLoadingWidget::Construct(const FArguments& InArgs, const FLoadin
 	// If loading text is on the left
 	else
 	{
+		if (UTexture2D* LoadingImage = Cast<UTexture2D>(ImageObject)) { // Patrick /*
+			// Add a Image
+			ImageBrush = FDeferredCleanupSlateBrush::CreateBrush(LoadingImage); 
+
+			Root.Get().AddSlot()
+				.HAlign(HAlign_Fill)
+				.VAlign(VAlign_Fill)
+				.AutoWidth()
+				[
+					SNew(SImage)
+					.Image(ImageBrush.IsValid() ? ImageBrush->GetSlateBrush() : nullptr)
+				];
+
+			// Add a Spacer 
+			Root.Get().AddSlot()
+				.HAlign(HAlign_Fill)
+				.VAlign(VAlign_Fill)
+				.AutoWidth()
+				[
+					SNew(SSpacer)
+					.Size(FVector2D(Settings.Space, 0.0f))
+				];
+		} // Patrick */
+
 		// Add Loading Text on the left first
 		Root.Get().AddSlot()
 			.HAlign(Settings.TextAlignment.HorizontalAlignment)
 			.VAlign(Settings.TextAlignment.VerticalAlignment)
 			.AutoWidth()
 			[
-				SNew(STextBlock)
+				SNew(STextBlock) // HER ER DET
 				.Visibility(LoadingTextVisibility)
 				.ColorAndOpacity(Settings.Appearance.ColorAndOpacity)
 				.Font(Settings.Appearance.Font)
 				.ShadowOffset(Settings.Appearance.ShadowOffset)
 				.ShadowColorAndOpacity(Settings.Appearance.ShadowColorAndOpacity)
 				.Justification(Settings.Appearance.Justification)
-				.Text(Settings.LoadingText)				
+				.Text(Settings.LoadingText)
 			];
 
 

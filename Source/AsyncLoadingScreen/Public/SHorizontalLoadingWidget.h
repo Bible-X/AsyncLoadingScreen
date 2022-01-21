@@ -23,4 +23,6 @@ public:
 	SLATE_END_ARGS()
 
 	void Construct(const FArguments& InArgs, const FLoadingWidgetSettings& Settings);
+
+	TSharedPtr<FDeferredCleanupSlateBrush> ImageBrush; // Patrick
 };

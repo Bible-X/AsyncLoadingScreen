@@ -248,6 +248,9 @@ struct ASYNCLOADINGSCREEN_API FLoadingWidgetSettings
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Loading Widget Setting")
 	FVector2D TransformPivot = FVector2D(0.5f, 0.5f);
 
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Loading Widget Setting") // Patrick
+	FSoftObjectPath ImageBeforeLoadingText; // Patrick
+
 	// Text displayed beside the animated icon
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Loading Widget Setting")
 	FText LoadingText;
