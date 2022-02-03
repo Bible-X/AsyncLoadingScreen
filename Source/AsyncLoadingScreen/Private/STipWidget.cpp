@@ -34,7 +34,7 @@ void STipWidget::Construct(const FArguments& InArgs, const FTipSettings& Setting
 			.ShadowColorAndOpacity(Settings.Appearance.ShadowColorAndOpacity)
 			.Justification(Settings.Appearance.Justification)
 			.WrapTextAt(Settings.TipWrapAt)
-			.Text(Settings.TipText[TipIndex])			
+			.Text(Settings.TipText[TipIndex])
 		];
 		
 	}

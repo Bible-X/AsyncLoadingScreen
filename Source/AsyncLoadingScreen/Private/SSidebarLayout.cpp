@@ -19,6 +19,7 @@
 
 void SSidebarLayout::Construct(const FArguments& InArgs, const FALoadingScreenSettings& Settings, const FSidebarLayoutSettings& LayoutSettings)
 {
+	FText hei = FText::FromString("Hallaa");
 	// Root widget and background
 	TSharedRef<SOverlay> Root = SNew(SOverlay)
 		+ SOverlay::Slot()
@@ -69,6 +70,15 @@ void SSidebarLayout::Construct(const FArguments& InArgs, const FALoadingScreenSe
 			.VAlign(LayoutSettings.TipAlignment.VerticalAlignment)
 			[
 				SNew(STipWidget, Settings.TipWidget)
+			];
+
+		VerticalBox.Get().AddSlot()
+			.AutoHeight()
+			.HAlign(LayoutSettings.TipAlignment.HorizontalAlignment)
+			.VAlign(LayoutSettings.TipAlignment.VerticalAlignment)
+			[
+				SNew(STextBlock)
+				.Text(hei)
 			];
 	}
 	else
