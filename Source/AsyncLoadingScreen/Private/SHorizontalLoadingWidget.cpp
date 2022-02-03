@@ -16,7 +16,6 @@
 void SHorizontalLoadingWidget::Construct(const FArguments& InArgs, const FLoadingWidgetSettings& Settings)
 {
 	bPlayReverse = Settings.ImageSequenceSettings.bPlayReverse;	
-	
 	const FSoftObjectPath& ImageAsset = Settings.ImageBeforeLoadingText; // Patrick
 	UObject* ImageObject = ImageAsset.TryLoad(); // Patrick
 
@@ -81,7 +80,7 @@ void SHorizontalLoadingWidget::Construct(const FArguments& InArgs, const FLoadin
 	{
 		if (UTexture2D* LoadingImage = Cast<UTexture2D>(ImageObject)) { // Patrick /*
 			// Add a Image
-			ImageBrush = FDeferredCleanupSlateBrush::CreateBrush(LoadingImage); 
+			ImageBrush = FDeferredCleanupSlateBrush::CreateBrush(LoadingImage);
 
 			Root.Get().AddSlot()
 				.HAlign(HAlign_Fill)
@@ -109,14 +108,14 @@ void SHorizontalLoadingWidget::Construct(const FArguments& InArgs, const FLoadin
 			.VAlign(Settings.TextAlignment.VerticalAlignment)
 			.AutoWidth()
 			[
-				SNew(STextBlock) // HER ER DET
+				SNew(STextBlock)
 				.Visibility(LoadingTextVisibility)
 				.ColorAndOpacity(Settings.Appearance.ColorAndOpacity)
 				.Font(Settings.Appearance.Font)
 				.ShadowOffset(Settings.Appearance.ShadowOffset)
 				.ShadowColorAndOpacity(Settings.Appearance.ShadowColorAndOpacity)
 				.Justification(Settings.Appearance.Justification)
-				.Text(Settings.LoadingText)
+				.Text(Settings.LoadingText)				
 			];
 
 
