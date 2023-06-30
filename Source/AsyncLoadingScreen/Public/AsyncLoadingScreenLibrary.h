@@ -22,7 +22,8 @@ class ASYNCLOADINGSCREEN_API UAsyncLoadingScreenLibrary : public UBlueprintFunct
 private:
 	static int32 DisplayBackgroundIndex;
 	static int32 DisplayTipTextIndex;
-	static int32 DisplayMovieIndex;
+	static int32 DisplayMovieIndex;	
+	static bool  bShowLoadingScreen;
 public:
 	
 	/**
@@ -51,6 +52,22 @@ public:
 
 
 	/**
+	 * Set enable/disable the loading screen for next levels
+	 *
+	 * @param bIsEnableLoadingScreen Should we enable the loading screen for next level?
+	 **/
+	UFUNCTION(BlueprintCallable, Category = "Async Loading Screen")
+	static void SetEnableLoadingScreen(bool bIsEnableLoadingScreen);
+
+
+	/**
+	 * Get enable/disable the loading screen for next levels
+	 *
+	 **/
+	UFUNCTION(BlueprintPure, Category = "Async Loading Screen")
+	static inline bool GetIsEnableLoadingScreen() { return bShowLoadingScreen; }
+
+	/**
 	 * Stop the loading screen. To use this function, you must enable the "bAllowEngineTick" option.
 	 * Call this function in BeginPlay event to stop the Loading Screen (works with Delay node).
 	 *
@@ -60,5 +77,35 @@ public:
 
 	static inline int32 GetDisplayBackgroundIndex() { return DisplayBackgroundIndex; }
 	static inline int32 GetDisplayTipTextIndex() { return DisplayTipTextIndex; }
-	static inline int32 GetDisplayMovieIndex() { return DisplayMovieIndex; }	
+	static inline int32 GetDisplayMovieIndex() { return DisplayMovieIndex; }
+
+	/**
+	 * Load all background images into memory
+	 * 
+	 * Only use this function when: 
+	 * "bPreloadBackgroundImages" option is checked, 
+	 * and you called "RemovePreloadedBackgroundImages" before.
+	 * 
+	 * You don't need to use this if you never call
+	 * "RemovePreloadedBackgroundImages" function,
+	 * since the background images are still in the memory
+	 * 
+	 * Note: Call this function before calling "OpenLevel" node.
+	 * 
+	 **/
+	UFUNCTION(BlueprintCallable, Category = "Async Loading Screen")
+	static void PreloadBackgroundImages();
+
+	/**
+	 * Remove all preloaded background images
+	 * 
+	 * Only need to use this function when 
+	 * "bPreloadBackgroundImages" is checked.
+	 * 
+	 * You need to call "PreloadBackgroundImages" 
+	 * to manually load all background images again.
+	 * 
+	 **/
+	UFUNCTION(BlueprintCallable, Category = "Async Loading Screen")
+	static void RemovePreloadedBackgroundImages();
 };

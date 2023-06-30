@@ -103,15 +103,15 @@ struct FTextAppearance
 
 	/** Drop shadow offset in pixels */
 	UPROPERTY(BlueprintReadWrite, Config, EditAnywhere, Category = "Text Appearance")
-	FVector2D ShadowOffset;
+	FVector2D ShadowOffset = FVector2D::ZeroVector;
 
 	/** Shadow color and opacity */
 	UPROPERTY(BlueprintReadWrite, Config, EditAnywhere, Category = "Text Appearance")
-	FLinearColor ShadowColorAndOpacity;
+	FLinearColor ShadowColorAndOpacity = FLinearColor::White;
 
 	/** How the text should be aligned with the margin. */
 	UPROPERTY(BlueprintReadWrite, Config, EditAnywhere, Category = "Text Appearance")
-	TEnumAsByte <ETextJustify::Type> Justification;
+	TEnumAsByte <ETextJustify::Type> Justification = ETextJustify::Left;
 };
 
 USTRUCT(BlueprintType)
@@ -168,7 +168,7 @@ struct FImageSequenceSettings
 	GENERATED_BODY()
 
 	/** An array of images for animating the loading icon.*/
-	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Loading Widget Setting", meta = (AllowedClasses = "Texture2D"))
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Loading Widget Setting", meta = (AllowedClasses = "/Script/Engine.Texture2D"))
 	TArray<UTexture2D*> Images;
 
 	/** Scale of the images.*/
@@ -195,7 +195,7 @@ struct ASYNCLOADINGSCREEN_API FBackgroundSettings
 	GENERATED_BODY()
 
 	// The images randomly display while in the loading screen on top of the movie 
-	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Background", meta = (AllowedClasses = "Texture2D"))
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Background", meta = (AllowedClasses = "/Script/Engine.Texture2D"))
 	TArray<FSoftObjectPath> Images;
 
 	// The scaling type to apply to images.
@@ -315,7 +315,7 @@ struct ASYNCLOADINGSCREEN_API FTipSettings
 
 	// The size of the tip before it's wrapped to the next line
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Tip Settings")
-	float TipWrapAt;
+	float TipWrapAt = 0.0f;
 
 	/**
 	 * If true, you will have to manually set which TipText index you want to display on the loading screen by calling "SetDisplayTipTextIndex" function
@@ -401,7 +401,7 @@ struct ASYNCLOADINGSCREEN_API FALoadingScreenSettings
 
 	/** Should we just play back, loop, etc.  NOTE: if the playback type is MT_LoopLast, then bAutoCompleteWhenLoadingCompletes will be togged on when the last movie is hit*/
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Movies Settings")
-	TEnumAsByte<EMoviePlaybackType> PlaybackType;
+	TEnumAsByte<EMoviePlaybackType> PlaybackType = EMoviePlaybackType::MT_Normal;
 
 	/**
 	 * All movie files must be locate at Content/Movies/ directory. Suggested format: MPEG-4 Movie (mp4). Enter file path/name without the extension.
@@ -675,6 +675,32 @@ public:
 
 	ULoadingScreenSettings(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get());
 	
+	/**
+	 * If true, load all background images at the start of the game.
+	 * 
+	 * This is a workaround for the issue when the background image 
+	 * is loaded too late with the wrong image scaling. 
+	 * 
+	 * This issue only happens in the Standalone or Launch mode.
+	 * The packaged game should work fine.
+	 * 
+	 * If you don't encounter this issue when developing, don't enable 
+	 * this option, since it will keep the background images in the 
+	 * memory all the time, therefore consumes memory resources.
+	 * 
+	 * However, you can manually remove all the preloaded background
+	 * images by calling the Blueprint function 
+	 * "RemovePreloadedBackgroundImages"
+	 * 
+	 * You will need to re-load all background images by calling 
+	 * the Blueprint function "PreloadBackgroundImages"
+	 * 
+	 * Note: Call "PreloadBackgroundImages" before the "OpenLevel"
+	 * 
+	 */
+	UPROPERTY(Config, EditAnywhere, Category = "General")
+	bool bPreloadBackgroundImages = false;
+
 	/**
 	 * The startup loading screen when you first open the game. Setup any studio logo movies here.
 	 */

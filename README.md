@@ -66,6 +66,20 @@ MoviePlayer is registered to PreLoadMap and PostLoadMapWithWorld delegates so it
 - Integrates seamlessly with an existing project.
 
 # Changelog
+
+### Version 1.5.0 (6/4/2023)
+- Add "PreloadBackgroundImages" option
+- Add Blueprint functions "PreloadBackgroundImages" and "RemovePreloadedBackgroundImages" to load and remove all the background images.
+
+![image](https://user-images.githubusercontent.com/1840964/230429985-6d353486-0389-448c-8e37-d4f9dd3505ae.png)
+![image](https://user-images.githubusercontent.com/1840964/230430019-fb5ab524-7f59-4201-b263-00cbc17672f0.png)
+
+### Version 1.4.0 (25/1/2023)
+- Fixed unintialized errors
+- Add Blueprint function "SetEnableLoadingScreen" to show/hide Loading Screen. Call this function before call the "OpenLevel" node
+
+![ALS-ShowHideLoadingScreen](https://user-images.githubusercontent.com/1840964/214602739-ebcdd994-08a4-4837-96b5-c5596efbdcb1.png)
+
 ### Version 1.3.0 (29/08.2021)
 - Supports Unreal Engine 4.27 (Select other branches for other UE versions)
 - Added option for hiding Loading Widget when level loading completes
@@ -98,7 +112,7 @@ Example:
 
 # Requirements
 
-Async Loading Screen plug-in requires Visual Studio and a C++ code project. If your project is blueprint based then you will need to convert it to C++ project otherwise you cannot package your game with code plug-in.
+~~Async Loading Screen plug-in requires Visual Studio and a C++ code project. If your project is blueprint based then you will need to convert it to C++ project otherwise you cannot package your game with code plug-in.~~ It doesn't require c++ project anymore.
 
 # Installation
 
@@ -378,6 +392,27 @@ Congratulation! We have finished the tutorial. You should try other layouts and 
 
 # Showcases
 
+- [Colors:Zero](http://www.colors-zero.com/)
+
+![Colors:Zero](https://user-images.githubusercontent.com/1840964/233838182-2c8cd8fa-dc49-41ed-b536-27a8650fe98a.jpg)
+
+---
+
+- [Elven Warmaiden](https://store.steampowered.com/app/1878000/Elven_Warmaiden/)
+
+![Elven Warmaiden](https://cdn.akamai.steamstatic.com/steam/apps/1878000/header.jpg?t=1644526061)
+
+---
+- [Logic - Keypad](https://store.steampowered.com/app/2265160/Logic__Keypad/)
+
+![logic-keypad](https://user-images.githubusercontent.com/1840964/215274878-c6dd3aa1-6b9c-4f4a-af41-de083943c8ef.jpg)
+
+---
+- [Witchtastic](https://store.steampowered.com/app/1080010/Witchtastic/)
+
+![witchtastic](https://user-images.githubusercontent.com/1840964/198943299-529b153a-322d-4431-bec9-9046147ced43.jpg)
+
+---
 - [Cursed Spire](https://www.youtube.com/watch?v=ZZlxmdRDRMI)
 
 ![cursed-spire-async-loading-screen](https://user-images.githubusercontent.com/1840964/93096502-ac24a500-f6ce-11ea-9f6a-613c7a6bb926.gif)

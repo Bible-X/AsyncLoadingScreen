@@ -50,7 +50,7 @@ int32 SLoadingWidget::OnPaint(const FPaintArgs& Args, const FGeometry& AllottedG
 	return SCompoundWidget::OnPaint(Args, AllottedGeometry, MyCullingRect, OutDrawElements, LayerId, InWidgetStyle, bParentEnabled);
 }
 
-SThrobber::EAnimation SLoadingWidget::GetThrobberAnimation(FThrobberSettings ThrobberSettings) const
+SThrobber::EAnimation SLoadingWidget::GetThrobberAnimation(const FThrobberSettings& ThrobberSettings) const
 {
 	const int32 AnimationParams = (ThrobberSettings.bAnimateVertically ? SThrobber::Vertical : 0) |
 		(ThrobberSettings.bAnimateHorizontally ? SThrobber::Horizontal : 0) |
@@ -117,8 +117,8 @@ void SLoadingWidget::ConstructLoadingIcon(const FLoadingWidgetSettings& Settings
 
 	// Hide loading widget when level loading is done if bHideLoadingWidgetWhenCompletes is true 
 	if (Settings.bHideLoadingWidgetWhenCompletes)
-	{
-		Visibility = TAttribute<EVisibility>::Create(TAttribute<EVisibility>::FGetter::CreateRaw(this, &SLoadingWidget::GetLoadingWidgetVisibility));
+	{		
+		SetVisibility(TAttribute<EVisibility>::Create(TAttribute<EVisibility>::FGetter::CreateRaw(this, &SLoadingWidget::GetLoadingWidgetVisibility)));
 	}	
 }
 

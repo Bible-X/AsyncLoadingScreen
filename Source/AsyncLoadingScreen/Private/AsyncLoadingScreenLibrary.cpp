@@ -9,10 +9,12 @@
 
 #include "AsyncLoadingScreenLibrary.h"
 #include "MoviePlayer.h"
+#include "AsyncLoadingScreen.h"
 
 int32 UAsyncLoadingScreenLibrary::DisplayBackgroundIndex = -1;
 int32 UAsyncLoadingScreenLibrary::DisplayTipTextIndex = -1;
 int32 UAsyncLoadingScreenLibrary::DisplayMovieIndex = -1;
+bool  UAsyncLoadingScreenLibrary::bShowLoadingScreen = true;
 
 void UAsyncLoadingScreenLibrary::SetDisplayBackgroundIndex(int32 BackgroundIndex)
 {
@@ -29,7 +31,34 @@ void UAsyncLoadingScreenLibrary::SetDisplayMovieIndex(int32 MovieIndex)
 	UAsyncLoadingScreenLibrary::DisplayMovieIndex = MovieIndex;	
 }
 
+void UAsyncLoadingScreenLibrary::SetEnableLoadingScreen(bool bIsEnableLoadingScreen)
+{
+	bShowLoadingScreen = bIsEnableLoadingScreen;
+}
+
 void UAsyncLoadingScreenLibrary::StopLoadingScreen()
 {
 	GetMoviePlayer()->StopMovie();
 }
+
+void UAsyncLoadingScreenLibrary::PreloadBackgroundImages()
+{
+	if (FAsyncLoadingScreenModule::IsAvailable())
+	{
+		FAsyncLoadingScreenModule& LoadingScreenModule = FAsyncLoadingScreenModule::Get();
+		if (LoadingScreenModule.IsPreloadBackgroundImagesEnabled())
+		{
+			LoadingScreenModule.LoadBackgroundImages();
+		}		
+	}
+}
+
+void UAsyncLoadingScreenLibrary::RemovePreloadedBackgroundImages()
+{
+	if (FAsyncLoadingScreenModule::IsAvailable())
+	{
+		FAsyncLoadingScreenModule& LoadingScreenModule = FAsyncLoadingScreenModule::Get();
+		LoadingScreenModule.RemoveAllBackgroundImages();
+	}
+}
+
